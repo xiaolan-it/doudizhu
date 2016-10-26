@@ -290,33 +290,36 @@
 
 		//初始化用户列表
 		function initUserList() {
-			var userObj = null;
+			var userObj2 = null;
 			var user_div_html = "";
 			var isOnlineFlag = false;
 			for (var i = 0; i < userJSON.length; i++) {
-				userObj = userJSON[i];
-				isOnlineFlag = isOnline(userObj.userId);
+				userObj2 = userJSON[i];
+				isOnlineFlag = isOnline(userObj2.userId);
 				user_div_html += '<div class="follower">'
 						+ '<img src="'
-						+ (imgUrl + userObj.img)
+						+ (imgUrl + userObj2.img)
 						+ '" alt="" id="user_img_'
-						+ userObj.userId
+						+ userObj2.userId
 						+ '" class="follower-avatar '
 						+ (isOnlineFlag ? '' : 'gray')
 						+ '">'
 						+ '<div class="body">'
-						+ '<div class="follower-controls" id="follower-controls-'+userObj.userId+'">';
+						+ '<div class="follower-controls" id="follower-controls-'+userObj2.userId+'">';
 				if (isOnlineFlag) {//在线
 					user_div_html += getOnlineHtml();
-				} else {
-					user_div_html += getNoOnlineHtml(i);
-				}
+				} else if(!isOnlineFlag) {
+					if(null== userObj) {
+						user_div_html += getNoOnlineHtml(i);
+					}
+					
+				} 
 
 				user_div_html += '</div><a href="javascript:;" class="follower-name">'
-						+ userObj.userName
+						+ userObj2.userName
 						+ '</a><br>'
 						+ '<a href="javascript:;" class="follower-username">'
-						+ userObj.desc + '</a>' + '</div></div>';
+						+ userObj2.desc + '</a>' + '</div></div>';
 
 			}
 			$("#user_list_div").html(user_div_html);
