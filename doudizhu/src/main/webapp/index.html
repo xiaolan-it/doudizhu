@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html class="gt-ie8 gt-ie9 not-ie">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Chat</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<!-- Pixel Admin's stylesheets -->
+<link href="assets/stylesheets/bootstrap.min.css" rel="stylesheet"
+	type="text/css">
+<link href="assets/stylesheets/pixel-admin.min.css" rel="stylesheet"
+	type="text/css">
+<link href="assets/stylesheets/widgets.min.css" rel="stylesheet"
+	type="text/css">
+<style type="text/css">
+.gray {
+	-webkit-filter: grayscale(100%);
+	-moz-filter: grayscale(100%);
+	-ms-filter: grayscale(100%);
+	-o-filter: grayscale(100%);
+	filter: grayscale(100%);
+	filter: gray;
+}
+</style>
+<!--[if lt IE 9]>
+		<script src="assets/javascripts/ie.min.js"></script>
+	<![endif]-->
+
+</head>
+
+
+
+<body class="theme-default main-menu-animated">
+
+
+	<div id="main-wrapper">
+
+		<div id="content-wrapper" style="padding-top: 8px;">
+			<div class="alert alert-danger alert-dismissable navbar-fixed-top"
+				style="display: none;" id="alert_div">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-hidden="true">&times;</button>
+				<span> 请先选择用户</span>
+			</div>
+			<div class="row">
+				<div id="userInfoDiv" style="display: none;"
+					class="panel panel-danger panel-dark panel-body-colorful widget-profile widget-profile-centered">
+					<div class="panel-heading">
+						<img src="assets/demo/avatars/1.jpg" id="userImg" alt=""
+							class="widget-profile-avatar">
+						<div class="widget-profile-header">
+							<span id="userName">John Doe</span><br>
+						</div>
+					</div>
+					<!-- / .panel-heading -->
+					<div class="panel-body">
+						<div class="widget-profile-text" id="userDesc" style="padding: 0;">简介</div>
+					</div>
+				</div>
+				<!-- 18. $FOLLOWERS =Followers-->
+				<div class="panel widget-followers">
+					<div class="panel-heading">
+						<span class="panel-title"><i
+							class="panel-title-icon fa fa-check"></i>用户</span>
+					</div>
+					<!-- / .panel-heading -->
+					<div class="panel-body" id="user_list_div">
+						<!-- 
+						<div class="follower">
+							<img src="assets/demo/avatars/2.jpg" alt=""
+								class="follower-avatar gray">
+							<div class="body">
+								<div class="follower-controls">
+									<a href="javascript:;" class="btn btn-sm"><i
+										class="fa fa-check"></i><span>&nbsp;&nbsp;选择</span></a>
+								</div>
+								<a href="javascript:;" class="follower-name">Robert Jang</a><br>
+								<a href="javascript:;" class="follower-username">@rjang</a>
+							</div>
+						</div>
+
+ -->
+					</div>
+				</div>
+				<div class="panel widget-chat">
+					<div class="panel-heading">
+						<span class="panel-title"><i
+							class="panel-title-icon fa fa-comments-o"></i>Chat</span>
+					</div>
+					<!-- / .panel-heading -->
+					<div class="panel-body" id="msgContentWrap">
+						<!-- 
+						<div class="message">
+							<img src="assets/demo/avatars/5.jpg" alt=""
+								class="message-avatar">
+							<div class="message-body">
+								<div class="message-heading">
+									<a href="javascript:;" title="">Denise Steiner</a> says: <span
+										class="pull-right">2 minutes ago</span>
+								</div>
+								<div class="message-text">Lorem ipsum dolor sit amet,
+									consectetur adipisicing elit, sed do eiusmod tempor incididunt
+									ut labore.</div>
+							</div>
+						</div>
+
+						<div class="message right">
+							<img src="assets/demo/avatars/1.jpg" alt=""
+								class="message-avatar">
+							<div class="message-body">
+								<div class="message-heading">
+									<a href="javascript:;" title="">John Doe</a> says: <span
+										class="pull-right">2 minutes ago</span>
+								</div>
+								<div class="message-text">Lorem ipsum dolor sit amet,
+									consectetur adipisicing elit, sed do eiusmod tempor incididunt
+									ut labore.</div>
+							</div>
+						</div>
+ -->
+					</div>
+					<!-- / .panel-body -->
+					<form class="panel-footer chat-controls">
+						<div class="chat-controls-input">
+							<textarea rows="1" class="form-control" id="msgContent"></textarea>
+						</div>
+						<a href="javascript:;" class="btn btn-primary chat-controls-btn"
+							onclick="sendMsg()">发送</a>
+					</form>
+					<!-- / .panel-footer -->
+				</div>
+
+
+			</div>
+
+		</div>
+
+	</div>
+	<script type="text/javascript"
+		src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js">
+		
+	</script>
+	<script src="assets/javascripts/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+		var onlineUserArr = new Array(); //在线用户
+		var userObj = null;
+		var imgUrl = "http://127.0.0.1:8080/doudizhu/";
+		//用户
+		var userJSON = [ {
+			"userId" : "100000",
+			"userName" : "王尼玛",
+			"sex" : 0,
+			"desc" : "LOL坑队友没商量",
+			"img" : "/img/dbzg.png"
+		}, {
+			"userId" : "100001",
+			"userName" : "盲僧",
+			"sex" : 0,
+			"desc" : "踢翻你",
+			"img" : "/img/ms.png"
+		}, {
+			"userId" : "100002",
+			"userName" : "疾风剑豪",
+			"sex" : 0,
+			"desc" : "疾风..",
+			"img" : "/img/jfjh.png"
+		}, {
+			"userId" : "100003",
+			"userName" : "迅捷",
+			"sex" : 0,
+			"desc" : "5s英雄",
+			"img" : "/img/xj.png"
+		}, {
+			"userId" : "100004",
+			"userName" : "剑圣",
+			"sex" : 0,
+			"desc" : "速度就是快",
+			"img" : "/img/js.png"
+		} ];
+		var socket;
+		if (!window.WebSocket) {
+			window.WebSocket = window.MozWebSocket;
+		}
+		if (window.WebSocket) {
+			socket = new WebSocket("ws://127.0.0.1:8888/ws");
+			socket.onmessage = function(event) {
+				var dataObj = JSON.parse(event.data);
+				if ("msg" == dataObj.type) {//接收消息
+					addMsgHtml(false, dataObj.msgVO);
+					notification(dataObj.msgVO, dataObj.msgVO.msg);//浏览器消息通知提醒
+				} else if ("up" == dataObj.type) {
+					setOnlineUser(dataObj.userVO);
+					notification(dataObj.userVO, "上线了");
+				} else {//在线用户
+					if (null == dataObj.onlineList) {
+						onlineUserArr = dataObj;
+					} else {
+						onlineUserArr = dataObj.onlineList;
+					}
+
+					initUserList();//初始化可选用户
+				}
+				console.log(event.data);
+			};
+			socket.onopen = function(event) {
+				console.debug("连接打开");
+				getOnlineUserList();//获取在线用户
+			};
+			socket.onclose = function(event) {
+				consolo.error("连接关闭");
+			};
+		} else {
+			alert("你的浏览器不支持 WebSocket！");
+		}
+
+		//连接成功从服务器获取在线用户
+		function getOnlineUserList() {
+			send('{"type":"online"}');
+		}
+
+		//选择用户并注册，index 用户列表下标
+		function selectUser(index) {
+			if (null == userObj) {
+				userObj = userJSON[index];
+				if (socket.readyState == WebSocket.OPEN) {
+					socket.send('{"type":"register","userVO":'
+							+ JSON.stringify(userObj) + '}');//发送消息
+
+				} else {
+					alert("连接没有开启.");
+				}
+
+				//发送消息注册
+				var registerFlag = true;
+				if (registerFlag) {//注册成功改变对应用户为在线
+					$("#follower-controls-" + userObj.userId).html(
+							getOnlineHtml());
+					$("#user_img_" + userObj.userId).removeClass("gray");
+					$("#userName").html(userObj.userName);
+					$("#userDesc").html(userObj.desc);
+					$("#userImg").attr("src", imgUrl + userObj.img);
+					$("#userInfoDiv").show();
+					//隐藏其它的选择按钮
+					$(".follower-controls").hide();
+					$("#follower-controls-" + userObj.userId).show();
+				}
+			}
+
+		}
+
+		//浏览器消息通知
+		function notification(userObj, content) {
+			if (window.Notification && Notification.permission !== "denied") {
+				Notification
+						.requestPermission(function(status) {
+							var n = new Notification(
+									undefined == userObj.userName ? userObj.from_user_name
+											: userObj.userName,
+									{
+										icon : imgUrl
+												+ (undefined == userObj.img ? userObj.userImg
+														: userObj.img),
+										body : content
+									});
+						});
+			}
+		}
+
+		//set online user
+		function setOnlineUser(userObj) {
+			$("#follower-controls-" + userObj.userId).html(getOnlineHtml());
+			$("#user_img_" + userObj.userId).removeClass("gray");
+			$("#follower-controls-" + userObj.userId).show();
+		}
+
+		//获取在线用户html
+		function getOnlineHtml() {
+			return '<a href="javascript:;" class="btn btn-xs btn-success ">在线</a>';
+		}
+
+		//获取离线可选用户html
+		function getNoOnlineHtml(index) {
+			return '<a href="javascript:;" onclick="selectUser('
+					+ index
+					+ ')" class="btn btn-sm">'
+					+ '<i class="fa fa-check"></i><span>&nbsp;&nbsp;选择</span></a>';
+		}
+
+		//初始化用户列表
+		function initUserList() {
+			var userObj2 = null;
+			var user_div_html = "";
+			var isOnlineFlag = false;
+			for (var i = 0; i < userJSON.length; i++) {
+				userObj2 = userJSON[i];
+				isOnlineFlag = isOnline(userObj2.userId);
+				user_div_html += '<div class="follower">'
+						+ '<img src="'
+						+ (imgUrl + userObj2.img)
+						+ '" alt="" id="user_img_'
+						+ userObj2.userId
+						+ '" class="follower-avatar '
+						+ (isOnlineFlag ? '' : 'gray')
+						+ '">'
+						+ '<div class="body">'
+						+ '<div class="follower-controls" id="follower-controls-'+userObj2.userId+'">';
+				if (isOnlineFlag) {//在线
+					user_div_html += getOnlineHtml();
+				} else if(!isOnlineFlag) {
+					if(null== userObj) {
+						user_div_html += getNoOnlineHtml(i);
+					}
+					
+				} 
+
+				user_div_html += '</div><a href="javascript:;" class="follower-name">'
+						+ userObj2.userName
+						+ '</a><br>'
+						+ '<a href="javascript:;" class="follower-username">'
+						+ userObj2.desc + '</a>' + '</div></div>';
+
+			}
+			$("#user_list_div").html(user_div_html);
+
+		}
+
+		//判断用户是否在线
+		function isOnline(userId) {
+			if (null != onlineUserArr) {
+				for (var i = 0; i < onlineUserArr.length; i++) {
+					if (onlineUserArr[i].userId == userId) {
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		//添加消息进会话界面
+		//isMy=true 我发出的信息
+		function addMsgHtml(isMy, msgVo) {
+			var html = '<div class="message '
+					+ (isMy ? 'right' : '')
+					+ '">'
+					+ '<img src="'
+					+ (imgUrl + (isMy ? userObj.img : msgVo.userImg))
+					+ '" alt="" class="message-avatar">'
+					+ '<div class="message-body"> <div class="message-heading">'
+					+ '<a href="javascript:;" title="">'
+					+ (isMy ? userObj.userName : msgVo.from_user_name) + '</a>'
+					+ ' <span class="pull-right">'
+					+ (getDateTohhmmss(new Date().getTime())) + '</span>'
+					+ '</div> <div class="message-text">'
+					+ (isMy ? $("#msgContent").val() : msgVo.msg) + '</div>'
+					+ '</div> </div>';
+			$("#msgContentWrap").append(html);
+
+		}
+
+		function sendMsg() {
+			var message = $("#msgContent").val();
+			if ("" != message) {
+				if (null != userObj) {
+
+					if (!window.WebSocket) {
+						return;
+					}
+					var msgJson = '{"type":"msg","msgVO":{"type":"txt","to":0,"from_user_id":"'
+							+ userObj.userId
+							+ '","from_user_name":"'
+							+ userObj.userName
+							+ '","userImg":"'
+							+ userObj.img
+							+ '","msg":"' + message + '"}}';
+					//先把消息放到会话界面
+					addMsgHtml(true, null);
+					send(msgJson);
+					$("#msgContent").val("").focus();
+				} else {
+					$("#alert_div").show();
+					setTimeout(function() {
+						$("#alert_div").hide()
+					}, 3000);
+				}
+			}
+
+		}
+
+		function send(json) {
+			if (socket.readyState == WebSocket.OPEN) {
+				socket.send(json);//发送消息
+			} else {
+				alert("你已离线！");
+			}
+		}
+
+		function getDateTohhmmss(ms) {
+			var date = new Date(ms);
+			return date.getHours() + ":" + date.getMinutes() + ":"
+					+ date.getSeconds();
+		}
+	</script>
+
+</body>
+</html>

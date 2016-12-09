@@ -1,0 +1,73 @@
+<html>
+    <head>
+    	<meta charset="utf-8">
+        <title>0</title>
+        <style type="text/css">
+        	.role-control{display:none;}
+        </style>
+         <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+    </head>
+    <body>
+        <ul>
+            <li><a href="#html/user.html" onclick="openMenu(this,null,0)">user1</a></li>
+            <li><a href="#html/book.html" onclick="openMenu(this,null,1)">book1</a></li>
+        </ul>
+        <div id="main_content"></div>
+       
+    
+
+ <script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.js"></script>
+        <script>
+        var menuJson = [{"role":["operation_user_add","operation_user_del"]},{"role":["operation_book_del"]}];
+            $(function(){
+            	var url = window.location.href;
+            	url = url.substring(url.indexOf("#")+1);
+            	if(-1 != url.indexOf("#"))
+            		openMenu(null,url,0);
+            })
+            
+            function openMenu(t,url,index){
+            	 url = null!=url?url:$(t).attr("href").substring(1);
+            	$.ajax({
+            		type:"get",
+            		url:url,
+            		success:function(d){
+            			$("#main_content").html(d);
+            			showOperationButton(index);
+            			var app = angular.module('myApp', []);
+            			app.controller('customersCtrl', function($scope, $http) {
+            			   $scope.names = [{"Name":"Alfreds Futterkiste","City":"Berlin","Country":"Germany"},
+            							{"Name":"Ana Trujillo Emparedados y helados","City":"México D.F.","Country":"Mexico"},
+            							{"Name":"Antonio Moreno Taquería","City":"México D.F.","Country":"Mexico"},
+            							{"Name":"Around the Horn","City":"London","Country":"UK"},
+            							{"Name":"B's Beverages","City":"London","Country":"UK"},
+            							{"Name":"Berglunds snabbköp","City":"Luleå","Country":"Sweden"},
+            							{"Name":"Blauer See Delikatessen","City":"Mannheim","Country":"Germany"},
+            							{"Name":"Blondel père et fils","City":"Strasbourg","Country":"France"},
+            							{"Name":"Bólido Comidas preparadas","City":"Madrid","Country":"Spain"},
+            							{"Name":"Bon app'","City":"Marseille","Country":"France"},
+            							{"Name":"Bottom-Dollar Marketse","City":"Tsawassen","Country":"Canada"},
+            							{"Name":"Cactus Comidas para llevar","City":"Buenos Aires","Country":"Argentina"},
+            							{"Name":"Centro comercial Moctezuma","City":"México D.F.","Country":"Mexico"},
+            							{"Name":"Chop-suey Chinese","City":"Bern","Country":"Switzerland"},
+            							{"Name":"Comércio Mineiro","City":"São Paulo","Country":"Brazil"}
+            							];
+            			});
+            		}
+            	});
+            	
+            	
+            }
+            
+            function showOperationButton(index){
+            	var operationArr = menuJson[index].role;
+            	for(var i =0; i < operationArr.length; i++){
+            		$("#main_content #"+operationArr[i]).show();//显示
+            	}
+            }
+            
+            
+        </script>
+     
+    </body>
+</html>

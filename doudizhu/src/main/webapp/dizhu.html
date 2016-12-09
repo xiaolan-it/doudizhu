@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>dz</title>
+	  <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+	  
+	<style>
+		body {
+			-moz-user-select: none;
+		/*火狐*/
+			-webkit-user-select: none;
+		/*webkit浏览器*/
+			-ms-user-select: none;
+		/*IE10*/
+			-khtml-user-select: none;
+		/*早期浏览器*/
+			user-select: none;
+		}
+		.card_container {
+			bottom: 0;
+			position: fixed;
+			margin: 0 auto;
+			height: 160px;
+		/**	transform: rotate(90deg);*/
+		}
+		
+		.card_div {
+			width: 70px;
+			box-shadow: 0px 0px 2px #000;
+			height: 110px;
+			border: 1px solid #234;
+			margin: 0 -96px 10px 50px;
+			float: left;
+			background-color: #f3f3f3;
+			transform: rotate(360deg);
+		}
+		
+		.card_div p {
+			font-size: 18px;
+			margin: 0;
+			font-weight: bold;
+		}
+		
+		.red {
+			color: red;
+		}
+		
+		.black {
+			color: #000;
+		}
+		
+		.card_top {
+			margin-top: -40px;
+		}
+		
+		.out_container {
+			margin: 100px;
+			position: absolute;
+		}
+		
+		
+</style>
+
+</head>
+<body>
+	<p id="cardArr"></p>
+	<div class="operate_div">
+		<a href="javascript:;" onclick="$('.card_div').removeClass('card_top');">收牌</a>
+		<a href="javascript:;" onclick="play()">出牌</a>
+	</div>
+	<div id="out_container" class="out_container">
+		
+	</div>
+	<div class="card_container">
+		
+	</div>
+<hr>
+<script src="assets/js/dizhu.js"></script>
+
+<script>
+
+
+</script>
+</body>
+</html>
