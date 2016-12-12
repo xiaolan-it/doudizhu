@@ -1,4 +1,6 @@
-var cardArr = "3♥,4♥,5♠,6♥,7♠,8♣,9♥,10♠,10♥,10♦,11♥,13♠,13♦,14♥,14♣,14♠,15♦,17".split(",");
+var cardArr1 = "3♥,4♥,5♠,6♥,7♠,8♣,9♥,10♠,10♥,10♦,11♥,13♠,13♦,14♥,14♣,14♠,15♦,17".split(",");
+var cardArr2 = "3♠,4♦,5♥,5♣,6♣,7♥,8♥,9♠,9♣,10♣,11♠,11♣,11♦,12♠,13♣,13♥,15♣,15♠".split(",");
+var cardArr3 = "3♣,3♦,4♣,4♠,5♦,6♠,6♦,7♦,7♣,8♠,8♦,9♦,12♣,12♦,12♥,14♦,15♥,16".split(",");
 /**
 	 * ##############斗地主规则：#######
 		一、牌面比较
@@ -63,12 +65,14 @@ function isMaxCard(v) {
 }
 
 //发牌
-function fapai() {
+function fapai(cardArr,index) {
     //初始化牌
     var cardHtml = "";
     var cardObj = new Array(); //牌值及花色
     var huaseClass; //默认黑色样式
     var cardObjLength = 0;
+    var c123 =  (1!=index?(2==index?"card_div2":"card_div3"):"");
+    console.log(c123);
     for (var i = 0; i < cardArr.length; i++) {
         huaseClass = "black"; //默认黑色样式
         cardObjLength = cardArr[i].length;
@@ -87,12 +91,13 @@ function fapai() {
         } else if (17 == parseInt(cardObj[0])) {
             huaseClass = "red";
         }
-        cardHtml += '<div class="card_div ' + huaseClass + '">';
+      
+        cardHtml += '<div class="card_div ' + huaseClass +' '+c123+'">'; //  (1!=index?(2==index?"card_div2":"card_div3"):"")
         cardHtml += '<p>' + getCardVal(parseInt(cardObj[0])) + '</p>';
         cardHtml += '<p>' + cardObj[1] + '</p></div>';
     }
 
-    $(".card_container").html(cardHtml);
+    $("#card_container"+index).html(cardHtml);
 }
 function play() {
     $("#out_container").append($(".card_container").find(".card_top"));
@@ -101,9 +106,11 @@ function play() {
 
 $(function() {
 
-    $("#cardArr").html(cardArr + "");
+    $("#cardArr").html(cardArr1 + "\n"+cardArr2+"\n"+cardArr3);
 
-    fapai();
+    fapai(cardArr1,1);
+    fapai(cardArr2,2);
+    fapai(cardArr3,3);
 
     $(".card_div").click(function(t) {
 
